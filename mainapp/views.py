@@ -92,3 +92,16 @@ def get_fruit_all(request):
                 break
     print(data)
     return render(request, 'fruit/index.html', locals())
+
+
+def find_fruit(request):
+    price1 = request.GET.get('price1',0)
+    price2 = request.GET.get('price2',1000)
+    #从查询参数中获取价格区间price1，price2
+    result = FruitEntity.objects.filter(price__gte=price1,price__lte=price2).all()
+    #根据我们价格区间来查找满足条件的所有水果信息
+    #将查询到的数据渲染到模板上
+    return render(request,'fruit/index.html',locals())
+
+
+    pass

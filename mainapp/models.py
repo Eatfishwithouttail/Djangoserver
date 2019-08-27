@@ -25,6 +25,8 @@ class CateTypeEntity(models.Model):
     name = models.CharField(max_length=20, verbose_name='分类名')
     order_num = models.IntegerField(verbose_name='排序')
 
+    objects = models.Manager()
+
     def __str__(self):
         return self.name
 
