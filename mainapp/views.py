@@ -100,9 +100,17 @@ def find_fruit(request):
     price2 = request.GET.get('price2',1000)
     print(price1,price2)
     #从查询参数中获取价格区间price1，price2
-    result = FruitEntity.objects.filter(price__gte=price1,price__lte=price2).\
-                                                exclude(price=250).all()
-                                                 # .filter(name__contains='果')
+    # result1 = FruitEntity.objects.filter(price__gte=price1,price__lte=price2).\
+    #                                             exclude(price=250).all()
+
+    result = FruitImageEntty.objects.values('url','fruit_id__name','fruit_id__price','fruit_id__source').filter(fruit_id__price__gte=price1,fruit_id__price__lte=price2).all()
+
+
+    print(result)
+    # .filter(name__contains='果')
+    # images = FruitImageEntty.objects.get(id=1)
+    # image =  images.fruit_id
+
 
     #根据我们价格区间来查找满足条件的所有水果信息
     #将查询到的数据渲染到模板上

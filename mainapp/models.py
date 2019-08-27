@@ -57,7 +57,7 @@ class FruitEntity(models.Model):
 #水果图片
 class FruitImageEntty(models.Model):
     fruit_id = models.ForeignKey(FruitEntity, on_delete=models.CASCADE)
-    url = models.ImageField(max_length=50, verbose_name='地址')
+    url = models.ImageField(max_length=50, verbose_name='地址',upload_to='fruit')
     name = models.CharField(max_length=100, verbose_name='名称')
 
     class Meta:

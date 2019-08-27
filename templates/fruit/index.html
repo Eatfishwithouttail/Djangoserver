@@ -10,14 +10,15 @@
                 <ul class="nav navbar-nav">
                     <li><a href="#">水果列表</a></li>
                 </ul>
+                <form method="get">
+                    <input class="form-control" style="width: 300px" name="price1" value="{% if price1 %}{{ price1 }}{% else %}0{% endif %}">
+                    <input class="form-control" style="width: 300px"  name="price2" value="{% if price2 %}{{ price2}}{% else %}1000{% endif %}">
+                    <button class="btn btn-default">搜索</button>
+                </form>
             </div>
         </div>
     </nav>
-    <form method="get">
-        <input   name="price1" value="{% if price1 %}{{ price1 }}{% else %}0{% endif %}">
-        <input   name="price2" value="{% if price2 %}{{ price2}}{% else %}1000{% endif %}">
-        <button>搜索</button>
-    </form>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3"></div>
@@ -28,11 +29,11 @@
 
                         <div class="col-sm-6 col-md-4">
                             <div class="thumbnail">
-                                <img src="img/{{ d.url }}" alt="">
+                                <img src="/media/{{ d.url }}" alt="">
                                 <div class="caption">
-                                    <h3>{{ d.name }}</h3>
-                                    <p>原产地：{{ d.source }}</p>
-                                    <p><a href="#" class="btn btn-primary" role="button">￥{{ d.price }}</a> <a href="#"
+                                    <h3>{{ d.fruit_id__name }}</h3>
+                                    <p>原产地：{{ d.fruit_id__source }}</p>
+                                    <p><a href="#" class="btn btn-primary" role="button">￥{{ d.fruit_id__price }}</a> <a href="#"
                                                                                                    class="btn btn-default"
                                                                                                    role="button">购买</a>
                                     </p>
