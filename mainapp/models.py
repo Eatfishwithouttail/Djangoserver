@@ -29,12 +29,14 @@ class CateTypeEntity(models.Model):
         return self.name
 
     class Meta:
+        app_label = 'mainapp'    #指定应用名称
         db_table = 't_category'
         ordering = ['-order_num']  # 指定排序字段 - 表示降序  默认升序
         verbose_name = '水果分类表'
         verbose_name_plural = verbose_name
 
 
+#水果类
 class FruitEntity(models.Model):
     name = models.CharField(max_length=20, verbose_name='水果名')
     price = models.FloatField(verbose_name='价格')
@@ -50,6 +52,7 @@ class FruitEntity(models.Model):
         return self.name
 
 
+#水果图片
 class FruitImageEntty(models.Model):
     fruit_id = models.ForeignKey(FruitEntity, on_delete=models.CASCADE)
     url = models.ImageField(max_length=50, verbose_name='地址')
@@ -64,6 +67,7 @@ class FruitImageEntty(models.Model):
         return self.name
 
 
+#水果商店类
 class StoreEntity(models.Model):
     # 默认情况下，模型自创建主键id字段--隐式
     # 但是也可以显式的方式声明主键（primary_key）
