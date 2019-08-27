@@ -6,7 +6,7 @@
 </head>
 <body>
     <ul>
-        {% for store in stores %}
+        {% for store in queryset %}
             <li>{{ store.name }} -- {{ store.create_time }}</li>
         {% endfor %}
     </ul>
