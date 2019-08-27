@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from mainapp.models import UserEntity, FruitEntity, FruitImageEntty
+from mainapp.models import UserEntity, FruitEntity, FruitImageEntty, StoreEntity
 
 
 # Create your views here.
@@ -97,11 +97,18 @@ def get_fruit_all(request):
 def find_fruit(request):
     price1 = request.GET.get('price1',0)
     price2 = request.GET.get('price2',1000)
+    print(price1,price2)
     #从查询参数中获取价格区间price1，price2
-    result = FruitEntity.objects.filter(price__gte=price1,price__lte=price2).all()
+    result = FruitEntity.objects.filter(price__gte=price1,price__lte=price2).\
+                                                exclude(price=250).all()
+                                                 # .filter(name__contains='果')
+
     #根据我们价格区间来查找满足条件的所有水果信息
     #将查询到的数据渲染到模板上
     return render(request,'fruit/index.html',locals())
 
 
-    pass
+def find_store(request):
+    stores = StoreEntity.objects.filter(create_time__month="08",create_time__year=2019).all()
+
+    return render(request,'store/list.html',locals())

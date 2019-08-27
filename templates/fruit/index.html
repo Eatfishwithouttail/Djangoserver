@@ -13,11 +13,17 @@
             </div>
         </div>
     </nav>
+    <form method="get">
+        <input   name="price1" value="{% if price1 %}{{ price1 }}{% else %}0{% endif %}">
+        <input   name="price2" value="{% if price2 %}{{ price2}}{% else %}1000{% endif %}">
+        <button>搜索</button>
+    </form>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="row">
+
                     {% for d in result %}
 
                         <div class="col-sm-6 col-md-4">

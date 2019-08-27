@@ -98,6 +98,11 @@ class StoreEntity(models.Model):
     # lat = models.FloatField(verbose_name='纬度')
     # lon = models.FloatField(verbose_name='经度')
 
+    @property
+    def open_time(self):
+        print(self.create_time)
+        return self.create_time
+
     class Meta:
         db_table = 't_store'
         verbose_name = '商店表'

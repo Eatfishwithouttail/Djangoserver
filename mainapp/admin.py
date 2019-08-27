@@ -45,7 +45,7 @@ class FruitAdmin(object):
 
 class StoreAdmin(object):
     # readonly_fields = ('id',)
-    list_display = ('id_', 'name', 'boss_name', 'city','phone', 'address','store_type', 'logo', 'opened')
+    list_display = ('id_', 'name', 'boss_name', 'city','phone', 'address','store_type', 'logo', 'opened','open_time')
     # 指定表单修改的字段
     fields = ('name', 'boss_name', 'city','phone', 'address','store_type', 'logo', 'summary', 'opened')
 
