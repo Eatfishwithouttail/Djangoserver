@@ -1,0 +1,44 @@
+{% extends 'fruit/base.html' %}
+{% block title %}
+    水果商店
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar narbar-default ">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">水果列表</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="row">
+                    {% for d in data %}
+
+
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <img src="img/{{ d.img.url }}" alt="">
+                                <div class="caption">
+                                    <h3>{{ d.fruit.name }}</h3>
+                                    <p>原产地：{{ d.fruit.source }}</p>
+                                    <p><a href="#" class="btn btn-primary" role="button">￥{{ d.fruit.price }}</a> <a href="#"
+                                                                                                   class="btn btn-default"
+                                                                                                   role="button">购买</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+{% endblock %}
