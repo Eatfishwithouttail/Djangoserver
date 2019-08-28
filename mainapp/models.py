@@ -4,6 +4,7 @@ from django.db import models
 
 
 # Create your models here.
+#用户模型
 class UserEntity(models.Model):
     name = models.CharField(max_length=20, verbose_name='账号')
     age = models.IntegerField(default=0, verbose_name='年龄')
@@ -19,6 +20,34 @@ class UserEntity(models.Model):
     def __str__(self):
         return self.name
 
+
+#实名认证模型
+class RealProfile(models.Model):
+    user = models.OneToOneField(UserEntity,verbose_name='账号',on_delete=models.CASCADE)
+    real_name = models.CharField(max_length=20,verbose_name="真实姓名")
+    number = models.CharField(max_length=30,verbose_name="证件号")
+    real_type= models.IntegerField(verbose_name="证件类型",choices=((0,"身份证"),
+                                                                     (1,"护照"),
+                                                                     (2,"驾驶证")))
+    image1 = models.ImageField(verbose_name='正面照',upload_to='user/real')
+    image2 = models.ImageField(verbose_name='反面照',upload_to='user/real')
+
+    def __str__(self):
+        return self.real_name
+
+    class Meta:
+        db_table = "t_user_profile"
+        verbose_name = verbose_name_plural = "实名认证表"
+#购物车模型
+class Cart(models.Model):
+    user = models.OneToOneField(UserEntity,verbose_name='账号',on_delete=models.CASCADE)
+    no = models.CharField(primary_key=True,max_length=10,verbose_name='购物车编号')
+
+    def __str__(self):
+        return self.no
+    class Meta:
+        db_table = 't_cart'
+        verbose_name = verbose_name_plural = '购物车表'
 
 # 水果分类
 class CateTypeEntity(models.Model):
@@ -52,6 +81,33 @@ class FruitEntity(models.Model):
 
     def __str__(self):
         return self.name
+
+
+
+#购物车详情表：声明水果与购物车的关系表
+class FruitCartEntity(models.Model):
+    cart = models.ForeignKey(Cart,on_delete=models.CASCADE,verbose_name='购物车编号')
+    fruit = models.ForeignKey(FruitEntity,on_delete=models.CASCADE,
+                              verbose_name='水果名')
+    cnt = models.IntegerField(verbose_name='数量',default=1)
+
+    def __str__(self):
+        return self.fruit.name + ':'+self.cart.no
+
+    class Meta:
+        db_table = 't_fruit_cart'
+        verbose_name = verbose_name_plural = '购物车详情'
+
+
+    @property
+    def price(self):
+        #属性方法在后台显示没有verbose_name，如何添加标签？
+        return round(self.cnt*self.fruit.price,2)
+
+    @property
+    def price1(self):
+        # 属性方法在后台显示没有verbose_name，如何添加标签？
+        return self.fruit.price
 
 
 #水果图片

@@ -8,12 +8,7 @@
             background-color: lightcyan;
         }
         #img {
-            height: 150px
-        }
-        .t_body{
-            position: absolute;
-            top: 20px;
-            overflow: hidden;
+            height: 150px;
         }
         .top {
             background:linear-gradient(to right, lightgreen, lightcoral);
@@ -51,12 +46,12 @@
                     {% for d in result %}
                         <div class="col-sm-6 col-md-4">
                             <div class="thumbnail">
-                                <img id="img" src="/media/{{ d.url }}" alt="">
+                                <img id="img" src="/media/{{ d.fruitimageentty__url }}" alt="">
                                 <div class="caption">
-                                    <h3>{{ d.fruit_id__name }}</h3>
-                                    <p>原产地：{{ d.fruit_id__source }}</p>
+                                    <h3>{{ d.name }}</h3>
+                                    <p>原产地：{{ d.source }}</p>
                                     <p>
-                                        <a href="#" class="btn btn-primary" role="button">￥{{ d.fruit_id__price }}</a>
+                                        <a href="#" class="btn btn-primary" role="button">￥{{ d.price }}</a>
                                         <a href="#" class="btn btn-default"role="button">购买</a>
                                     </p>
                                 </div>

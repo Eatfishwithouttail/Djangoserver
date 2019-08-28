@@ -1,5 +1,5 @@
 from django.contrib import admin
-from mainapp.models import UserEntity, CateTypeEntity, FruitEntity, StoreEntity, FruitImageEntty
+from mainapp.models import UserEntity, CateTypeEntity, FruitEntity, StoreEntity, FruitImageEntty,RealProfile,Cart,FruitCartEntity
 # Register your models here.
 import xadmin
 
@@ -52,9 +52,33 @@ class StoreAdmin(object):
 class FruitImageAdmin(object):
     list_display = ('id', 'fruit_id', 'url', 'name')
 
+class RealProfilelAdmin(object):
+    list_display = ('user','real_name','number','real_type','image1','image2')
+
+class CartAdmin(object):
+    list_display = ('user','no')
+
+class FruitCartEntityAdmin(object):
+    list_display = ('cart','fruit','get_price1','cnt','get_price')
+
+    def get_price1(self,obj):
+        return obj.price1
+
+    get_price1.short_description = "单价"
+
+    def get_price(self, obj):
+        return obj.price
+
+    get_price.short_description = "小计"
+
+
+
 
 xadmin.site.register(UserEntity, UserAdmin)
 xadmin.site.register(CateTypeEntity, CateTypeAdmin)
 xadmin.site.register(FruitEntity, FruitAdmin)
 xadmin.site.register(FruitImageEntty, FruitImageAdmin)
 xadmin.site.register(StoreEntity, StoreAdmin)
+xadmin.site.register(RealProfile, RealProfilelAdmin)
+xadmin.site.register(Cart, CartAdmin)
+xadmin.site.register(FruitCartEntity, FruitCartEntityAdmin)

@@ -103,8 +103,8 @@ def find_fruit(request):
     # result1 = FruitEntity.objects.filter(price__gte=price1,price__lte=price2).\
     #                                             exclude(price=250).all()
 
-    result = FruitImageEntty.objects.values('url','fruit_id__name','fruit_id__price','fruit_id__source').filter(fruit_id__price__gte=price1,fruit_id__price__lte=price2).all()
-
+    # result = FruitImageEntty.objects.values('url','fruit_id__name','fruit_id__price','fruit_id__source').filter(fruit_id__price__gte=price1,fruit_id__price__lte=price2).all()
+    result = FruitEntity.objects.values('name','price','source','fruitimageentty__url').filter(price__gte=price1,price__lte=price2).all()
 
     print(result)
     # .filter(name__contains='果')
@@ -151,7 +151,7 @@ def all_store(request):
 
 def count_fruit(request):
     #返回json数据，统计每种分类的水果数量，最高价格，和最低价格和总价格
-    result =FruitEntity.objects.aggregate(cnt=Count('name'),acg=Avg('price'),max=Max('price'),min=Min('price'),sum=Sum('price'))
+    # result =FruitEntity.objects.aggregate(cnt=Count('name'),acg=Avg('price'),max=Max('price'),min=Min('price'),sum=Sum('price'))
 
     #中秋节： 全场水果打8.8折
     # FruitEntity.objects.update(price=F('price')*0.88)
@@ -161,9 +161,14 @@ def count_fruit(request):
 
     fruits2 =  FruitEntity.objects.filter(Q(price__lte=3) | Q(price__gte=10) | Q(Q(source='西安') & Q(name__contains='果'))).values()
 
+    results = FruitEntity.objects.values('name','price','source','fruitimageentty__url').all()
+
+    results1 = FruitEntity.objects.raw("select * from t_fruit_image")
+    for i in results1:
+        print(i.url,i.name)
 
     return JsonResponse({
-        'count':result,
+        'count':[result for result in results],
         'fruits':[fruit for fruit in fruits],
         'multi_query':[fruit for fruit in fruits2],
         })

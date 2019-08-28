@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 from xadmin import views
 import xadmin
-class BaseSetting:
+class BaseSetting(object):
     enable_themes = True  # 开启主题功能
     use_bootswatch = True
-    menu_style = 'accordion'   # 启用菜单样式
-    site_title = ''             #设置标题
-    site_footer = ''            #设置页尾
 
 
+class GlobalSettings(object):
+    site_title = '后台管理'
+    site_footer = '@'
+    menu_style = 'accordion'  # 左边导航栏 收缩 手风琴
+
+
+xadmin.site.register(views.CommAdminView, GlobalSettings)
 xadmin.site.register(views.BaseAdminView, BaseSetting)
