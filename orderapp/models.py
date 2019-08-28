@@ -84,3 +84,12 @@ class OrderDetail(BaseModel):
     def price1(self):
         return self.goods_id.price
 
+
+    # @property
+    # def image(self):
+    #     images = self.goods_id.fruitimageentty_set.values('url')
+    #     for i in images:
+    #         print(i)
+    #
+    #     return i['url']
+
