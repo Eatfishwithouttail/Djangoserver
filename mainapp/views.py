@@ -1,5 +1,12 @@
-from django.http import HttpResponse, JsonResponse
+import os
+from datetime import datetime
+
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.template import loader
+from django.urls import reverse
+
+from helloDjango import settings
 from mainapp.models import UserEntity, FruitEntity, FruitImageEntty, StoreEntity
 from django.db.models import Count, Sum, Min, Avg, Max, F, Q
 
@@ -99,6 +106,9 @@ def find_fruit(request):
     price1 = request.GET.get('price1',0)
     price2 = request.GET.get('price2',1000)
     print(price1,price2)
+    username = request.COOKIES.get('login_name')
+    if not username:
+        return redirect('/user/login')
     #从查询参数中获取价格区间price1，price2
     # result1 = FruitEntity.objects.filter(price__gte=price1,price__lte=price2).\
     #                                             exclude(price=250).all()
@@ -114,14 +124,28 @@ def find_fruit(request):
 
     #根据我们价格区间来查找满足条件的所有水果信息
     #将查询到的数据渲染到模板上
-    return render(request,'fruit/index.html',locals())
-
+    return render(request,'fruit/afterlog.html',locals())
 
 def find_store(request):
-    queryset = StoreEntity.objects.filter(create_time__month="08",create_time__year=2019)
+    user = UserEntity.objects.all()
+    msg = "最优秀的学员"
 
-    stores = queryset.all()
-    return render(request,'store/list.html',locals())
+    info = '<h3>lallala</h3>'
+    size = os.path.getsize('mainapp/models.py')
+    file_dir = os.path.join(settings.BASE_DIR,'mainapp/')
+    files = {path:os.stat(file_dir+path) for path in os.listdir(file_dir) if os.path.isfile( file_dir + path)}
+    #加载模板
+    template = loader.get_template('store/list.html')
+    html = template.render(context={
+        'msg':msg,
+        'users':user,
+        'info':info,
+        'time':datetime.now(),
+        "file":files,
+        "float":19.13549
+    })
+
+    return  HttpResponse(html,status=200)  #增加响应头？？？
 
 
 
@@ -172,3 +196,41 @@ def count_fruit(request):
         'fruits':[fruit for fruit in fruits],
         'multi_query':[fruit for fruit in fruits2],
         })
+
+
+
+def login(request):
+    # result = FruitEntity.objects.values('name','price','source','fruitimageentty__url').all()
+     return render(request,'fruit/index.html')
+
+
+def loginHandler(request):
+    # price1 = request.GET.get('price1', 0)
+    # price2 = request.GET.get('price2', 1000)
+    # result = FruitEntity.objects.values('name', 'price', 'source', 'fruitimageentty__url').filter(price__gte=price1,
+    #                                                                                               price__lte=price2).all()
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        phone = request.POST.get('phone')
+        user_ = UserEntity.objects.filter(name=name).first()
+        print(name,phone,user_.name)
+        response = ''
+        if user_:
+            if user_.phone == phone:
+                response = HttpResponseRedirect('find')
+                response.set_cookie('login_name',user_.name,max_age=20)
+                response.set_cookie('login_status',True,max_age=20)
+                return response
+            else:
+                re = {'msg':'密码错误'}
+                return HttpResponse(re)
+        else:
+            re = {'msg':'用户不存在'}
+            return HttpResponse(re)
+
+
+
+def find_nut(request):
+    result = FruitEntity.objects.values('name', 'price', 'source', 'fruitimageentty__url').filter(category__name='坚果类').all()
+    print(result)
+    return render(request, 'fruit/afterlog.html', locals())

@@ -72,17 +72,34 @@ class FruitEntity(models.Model):
     name = models.CharField(max_length=20, verbose_name='水果名')
     price = models.FloatField(verbose_name='价格')
     source = models.CharField(max_length=30, verbose_name='原产地')
-    category = models.ForeignKey(CateTypeEntity, on_delete=models.CASCADE)
+    category = models.ForeignKey(CateTypeEntity, on_delete=models.CASCADE,related_name='fruits',to_field='id')
+
+    #默认情况下，反向引用的名称是实力的小写加__set
+    # 可以通过real_name来指定
+    #使用第三张表来建立fruit和user建立多对多关系
+    users = models.ManyToManyField(UserEntity,db_table='t_collect',related_name='fruits',
+                                   verbose_name='收藏列表',blank=True,null=True)
+    tags = models.ManyToManyField('TagEntity',db_table='t_fruit_tags',related_name='fruits'
+                                       ,verbose_name='标签名',blank=True,null=True)
+
 
     class Meta:
         db_table = 't_fruit'
-        verbose_name = '水果表'
-        verbose_name_plural = verbose_name
+        verbose_name = verbose_name_plural = '水果表'
 
     def __str__(self):
         return self.name
 
+class TagEntity(models.Model):
+    name = models.CharField(max_length=50,verbose_name='标签名')
+    order_num = models.IntegerField(default=1,verbose_name="序号")
 
+    def __str__(self):
+        return self.name
+    class Meta:
+        db_table = 't_tag'
+        verbose_name = verbose_name_plural = '标签表'
+        ordering = ['-order_num']
 
 #购物车详情表：声明水果与购物车的关系表
 class FruitCartEntity(models.Model):

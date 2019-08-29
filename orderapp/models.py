@@ -88,8 +88,8 @@ class OrderDetail(BaseModel):
     # @property
     # def image(self):
     #     images = self.goods_id.fruitimageentty_set.values('url')
-    #     for i in images:
-    #         print(i)
+    #     # for i in images:
+    #     #     print(i)
     #
-    #     return i['url']
+    #     return images[1]['url']
 

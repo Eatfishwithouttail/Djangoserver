@@ -1,14 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>水果店</title>
-</head>
-<body>
-    <ul>
-        {% for store in queryset %}
-            <li>{{ store.name }} -- {{ store.create_time }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'fruit/base.html' %}
+
+{% block styles %}
+    <style>
+     {#.even{#}
+     {#    background-color: lightsalmon;#}
+     {#}#}
+    </style>
+{% endblock %}
+
+{% block content %}
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <th>ID</th>
+                <th>账号</th>
+                <th>真实姓名</th>
+                <th>手机号</th>
+            </thead>
+                <tbody >
+                {% for user in users %}
+                    <tr class="{% cycle "even" "" %}" >
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.realprofile.real_name }}</td>
+                        <td>{{ user.phone }}</td>
+                     </tr>
+                    {#  单行注释 #}
+                    {% comment %}
+                       for循环加if条件
+                    {% endcomment %}
+                {% endfor %}
+                </tbody>
+        </table>
+        {{ info | safe }}
+        {% autoescape off %}
+            {{ info }}
+        {% endautoescape %}
+    {{ time|date:'Y-m-d H:i:s a'}}
+    <br>
+    {% for path, f_stat in file.items %}文件：{{ path }}的大小为{{ f_stat.st_size |filesizeformat }}<br>{% endfor %}
+    {{ float | floatformat:2 }}
+{% endblock %}

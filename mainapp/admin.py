@@ -1,5 +1,5 @@
 from django.contrib import admin
-from mainapp.models import UserEntity, CateTypeEntity, FruitEntity, StoreEntity, FruitImageEntty,RealProfile,Cart,FruitCartEntity
+from mainapp.models import UserEntity, CateTypeEntity, FruitEntity, StoreEntity, FruitImageEntty,RealProfile,Cart,FruitCartEntity,TagEntity
 # Register your models here.
 import xadmin
 
@@ -71,6 +71,9 @@ class FruitCartEntityAdmin(object):
 
     get_price.short_description = "小计"
 
+class TagsAdmin(object):
+    list_display = ('name','order_num')
+    fields = ('name','order_num')
 
 
 
@@ -82,3 +85,4 @@ xadmin.site.register(StoreEntity, StoreAdmin)
 xadmin.site.register(RealProfile, RealProfilelAdmin)
 xadmin.site.register(Cart, CartAdmin)
 xadmin.site.register(FruitCartEntity, FruitCartEntityAdmin)
+xadmin.site.register(TagEntity, TagsAdmin)

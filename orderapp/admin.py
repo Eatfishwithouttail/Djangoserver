@@ -24,7 +24,6 @@ class OrderAddressAdmin(object):
     list_display = ('id','user_id','receiver','receiver_phone','receiver_phone')
 
 
-
 xadmin.site.register(OrderModel,OrderAdmin)
 xadmin.site.register(OrderAddress,OrderAddressAdmin)
 xadmin.site.register(OrderDetail,OrderDetailAdmmin)
