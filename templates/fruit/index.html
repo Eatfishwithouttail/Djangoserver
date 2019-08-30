@@ -15,12 +15,14 @@
             font-size: 30px;
             text-align: center;
         }
-        #msg{
+
+        #msg {
             float: right;
             margin-top: 0px;
             padding: 0px;
             margin-right: 80px;
         }
+
     </style>
 {% endblock %}
 {% block content %}
@@ -33,24 +35,24 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-{#                <ul class="nav navbar-nav">#}
-{#                    <li class="dropdown">#}
-{#                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"#}
-{#                           aria-expanded="false">水果分类<span class="caret"></span></a>#}
-{#                        <ul class="dropdown-menu">#}
-{#                            <li><a href="#">坚果类</a></li>#}
-{#                            <li><a href="#">瓜类</a></li>#}
-{#                            <li><a href="#">dasdas</a></li>#}
-{#                        </ul>#}
-{#                    </li>#}
-{#                </ul>#}
-{#                <form class="navbar-form navbar-left" method="get" action="/user/login">#}
-{#                    <div class="form-group">#}
-{#                        <input type="text" class="form-control" placeholder="最低价格" name="price1">#}
-{#                        <input type="text" class="form-control" placeholder="最高价格" name="price2">#}
-{#                    </div>#}
-{#                    <button type="submit" class="btn btn-default">搜索</button>#}
-{#                </form>#}
+                {#                <ul class="nav navbar-nav">#}
+                {#                    <li class="dropdown">#}
+                {#                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"#}
+                {#                           aria-expanded="false">水果分类<span class="caret"></span></a>#}
+                {#                        <ul class="dropdown-menu">#}
+                {#                            <li><a href="#">坚果类</a></li>#}
+                {#                            <li><a href="#">瓜类</a></li>#}
+                {#                            <li><a href="#">dasdas</a></li>#}
+                {#                        </ul>#}
+                {#                    </li>#}
+                {#                </ul>#}
+                {#                <form class="navbar-form navbar-left" method="get" action="/user/login">#}
+                {#                    <div class="form-group">#}
+                {#                        <input type="text" class="form-control" placeholder="最低价格" name="price1">#}
+                {#                        <input type="text" class="form-control" placeholder="最高价格" name="price2">#}
+                {#                    </div>#}
+                {#                    <button type="submit" class="btn btn-default">搜索</button>#}
+                {#                </form>#}
                 <ul class="nav navbar-nav navbar-right">
                     <li><a data-toggle="modal" data-target=".bs-example-modal-sm">登录</a></li>
                     <li><a href="#">注册</a></li>
@@ -58,7 +60,7 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <P style="color: red" id="msg" >{{ msg|safe }}</P>
+    <P style="color: red" id="msg">{{ msg|safe }}</P>
     {#    展示页面 #}
     <p class="top">水果列表</p>
     <div class="container-fluid  t_body">
@@ -69,7 +71,7 @@
                     {% for d in result %}
                         <div class="col-sm-6 col-md-4">
                             <div class="thumbnail">
-                                <img id="img" src="/media/{{ d.fruitimageentty__url }}" alt="">
+                                <img id="img" src="/media/{{ d.url }}" alt="">
                                 <div class="caption">
                                     <h3>{{ d.name }}</h3>
                                     <p>原产地：{{ d.source }}</p>
@@ -81,6 +83,25 @@
                             </div>
                         </div>
                     {% endfor %}
+                    <nav aria-label="Page navigation" class="pager">
+                        <ul class="pagination">
+                            <li>
+                                <a href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li>
+                                <a href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
             <div class="col-md-3"></div>
@@ -96,23 +117,24 @@
                     <h3>登录</h3>
                 </div>
                 <form method="post" action="/user/loging">{% csrf_token %}
-                <div class="modal-body">
+                    <div class="modal-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1" >账号：</label>
-                            <input type="text" class="form-control" placeholder="账号" name="name" id="name" value="{{ name }}">
-                             <label for="exampleInputEmail1">密码：</label>
+                            <label for="exampleInputEmail1">账号：</label>
+                            <input type="text" class="form-control" placeholder="账号" name="name" id="name"
+                                   value="{{ name }}">
+                            <label for="exampleInputEmail1">密码：</label>
                             <input type="text" class="form-control" placeholder="密码" name="phone" id="phone">
                         </div>
-{#                        <div class="form-group">#}
-{#                            <label for="exampleInputEmail1">密码：</label>#}
-{#                            <input type="text" class="form-control" placeholder="密码" name="phone" id="phone">#}
-{#                        </div>#}
-                </div>
-                <div class="modal-footer">
-                    <a href="#">没有账号？ 点我注册</a>
-                    <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>
-                    <button type="submit" class="btn btn-info" >登录</button>
-                </div>
+                        {#                        <div class="form-group">#}
+                        {#                            <label for="exampleInputEmail1">密码：</label>#}
+                        {#                            <input type="text" class="form-control" placeholder="密码" name="phone" id="phone">#}
+                        {#                        </div>#}
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#">没有账号？ 点我注册</a>
+                        <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-info">登录</button>
+                    </div>
                 </form>
             </div>
         </div>

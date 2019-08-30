@@ -5,6 +5,50 @@
 
 
 {% block content %}
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'user:find' %}">首页</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">水果分类<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'user:f_nut' '坚果类' %}">坚果类</a></li>
+                            <li><a href="{% url 'user:f_nut' '瓜果类' %}">瓜果类</a></li>
+                            <li><a href="{% url 'user:f_nut' '清火养颜' %}">清火养颜</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left" method="get" action="/user/find">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="最低价格" name="price1">
+                        <input type="text" class="form-control" placeholder="最高价格" name="price2">
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a >你好,{{  username }}</a></li>
+                    <li><a href="/user/loginout">注销</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">个人中心<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/user/cart">查看购物车</a></li>
+                            <li><a href="#">查看订单</a></li>
+                            <li><a href="#">查看地址</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+
 <ul>
     {% for f in fruit %}
     <li>{{ f.name }}:{{ f.cart__fruitcartentity__fruit__name}}:{{ f.cart__fruitcartentity__cnt }}:{{ f.cart__fruitcartentity__fruit__price }}</li>
