@@ -1,0 +1,14 @@
+{% extends 'fruit/base.html' %}
+
+
+
+
+
+{% block content %}
+<ul>
+    {% for f in fruit %}
+    <li>{{ f.name }}:{{ f.cart__fruitcartentity__fruit__name}}:{{ f.cart__fruitcartentity__cnt }}:{{ f.cart__fruitcartentity__fruit__price }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

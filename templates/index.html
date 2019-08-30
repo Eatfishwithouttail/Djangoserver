@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>主页</title>
-</head>
-<body>
-<h3>用户</h3>
-<ul>
-    {% for user in users %}
-    <li><span>{{ user.id }}</span>.<a>{{ user.name }}</a></li>
-    {% endfor %}
-</ul>
-</body>
-</html>
+{% extends 'fruit/base.html' %}
+
+
+
+{% block content %}
+<a href="{% url 'user:login' %}">点此进入水果商店</a>
+{% endblock %}

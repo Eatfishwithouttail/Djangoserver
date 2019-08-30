@@ -17,11 +17,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import path, include
 
 # view 处理函数必须要求声明一个request参数，表示客户端的请求对象
 # 请求对象中包含哪些信息：请求头handers
+from mainapp.models import FruitEntity
+
 '''
     request.get_full_path()
     request.path
@@ -38,24 +40,12 @@ from django.urls import path, include
 
 def index(request: HttpRequest):
     # 加载数据模型
-    users = [
-        {
-            'id': 1,
-            'name': 'jack'
-        },
-        {
-            'id': 2,
-            'name': 'tom'
-        },
-        {
-            'id': 3,
-            'name': 'lisa'
-        }
-    ]
     # return HttpResponse('<h1 style="color:red;">hi Django</h1>')
     # 将数据渲染到模板中，并将渲染之后html响应给客户端
-    return render(request, 'index.html', locals())
-
+    result = FruitEntity.objects.values('name', 'price', 'source', 'fruitimageentty__url').all()
+    if request.COOKIES.get('login_name'):
+        return redirect('/user/find')
+    return render(request, 'fruit/index.html', locals())
 
 import xadmin
 

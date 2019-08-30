@@ -248,7 +248,7 @@ def find_nut(request,name):
 
 def loginout(request):
     response = HttpResponse("ok")
-    response = HttpResponseRedirect('login')
+    response = HttpResponseRedirect('/')
     response.delete_cookie('login_name')
     response.delete_cookie('is_login')
     key = request.COOKIES.get('login_name')
@@ -256,3 +256,10 @@ def loginout(request):
     return response
 
 
+def FruitCart(request):
+    username = request.COOKIES.get('login_name')
+    fruit = UserEntity.objects.values('name','cart__fruitcartentity__fruit__name','cart__fruitcartentity__cnt','cart__fruitcartentity__fruit__price').filter(name=username)
+    print(
+        fruit
+    )
+    return render(request,'fruit/cart.html',locals())
