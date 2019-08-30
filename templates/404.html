@@ -1,0 +1,12 @@
+{% extends 'fruit/base.html' %}
+
+
+
+{% block content %}
+ <h3>
+    sorry, 你请求的参数{{ request_path }}<script>document.write(window.location)</script>不存在
+ </h3>
+    <P>
+        3秒后跳转到<a href="/">主页</a>
+    </P>
+{% endblock %}

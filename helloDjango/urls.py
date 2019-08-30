@@ -65,8 +65,9 @@ from xadmin.plugins import xversion
 xversion.register_models()
 urlpatterns = [
                   path('admin/', admin.site.urls),
-                  path('', index),
                   # 配置子路由, include()导入mainapp下urls.py的所有子路由
-                  path('user/', include('mainapp.urls')),
+                  path('user/', include('mainapp.urls',namespace='user')),
                   path('xadmin/', xadmin.site.urls),
+                  path('order/',include('orderapp.urls',namespace='order')),
+                  path('', index),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

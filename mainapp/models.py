@@ -1,14 +1,25 @@
+import re
 import uuid
 
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
 # Create your models here.
+
+
+class UserValidator():
+    @classmethod
+    def valid_phone(cls,value):
+        if not re.match(r'1[1-57-9]\d{9}',value):
+            raise ValidationError('手机格式不正确')
+        return True
+
 #用户模型
 class UserEntity(models.Model):
     name = models.CharField(max_length=20, verbose_name='账号')
     age = models.IntegerField(default=0, verbose_name='年龄')
-    phone = models.CharField(max_length=11, verbose_name='手机号', blank=True, null=True)
+    phone = models.CharField(max_length=11, verbose_name='手机号', blank=True, null=True,validators=[UserValidator.valid_phone])
     class Meta:
         # 设置表名
         db_table = 't_user'

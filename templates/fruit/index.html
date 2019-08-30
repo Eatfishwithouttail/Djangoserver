@@ -58,7 +58,7 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <P style="color: red" id="msg" >{{ msg }}</P>
+    <P style="color: red" id="msg" >{{ msg|safe }}</P>
     {#    展示页面 #}
     <p class="top">水果列表</p>
     <div class="container-fluid  t_body">
@@ -98,8 +98,8 @@
                 <form method="post" action="/user/loging">{% csrf_token %}
                 <div class="modal-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">账号：</label>
-                            <input type="text" class="form-control" placeholder="账号" name="name" id="name">
+                            <label for="exampleInputEmail1" >账号：</label>
+                            <input type="text" class="form-control" placeholder="账号" name="name" id="name" value="{{ name }}">
                              <label for="exampleInputEmail1">密码：</label>
                             <input type="text" class="form-control" placeholder="密码" name="phone" id="phone">
                         </div>

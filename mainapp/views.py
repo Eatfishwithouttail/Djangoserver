@@ -215,8 +215,8 @@ def loginHandler(request):
         name = request.POST.get('name',None)
         phone = request.POST.get('phone',None)
         response = ''
-        if name:
-            user_ = UserEntity.objects.filter(name=name).first()
+        user_ = UserEntity.objects.filter(name=name).first()
+        if user_:
             print(name, phone, user_.name)
             if user_.phone == phone:
                 response = HttpResponse("ok")
@@ -225,10 +225,12 @@ def loginHandler(request):
                 response.set_cookie('login_status',True)
                 return response
             else:
-                msg = '用户名或密码错误'
+                result = FruitEntity.objects.values('name', 'price', 'source', 'fruitimageentty__url').all()
+                msg = '<script>alert("密码错误")</script>'
                 return render(request,'fruit/index.html',locals())
         else:
-            msg = '用户不存在'
+            result = FruitEntity.objects.values('name', 'price', 'source', 'fruitimageentty__url').all()
+            msg = '<script>alert("用户不存在")</script>'
             return render(request,'fruit/index.html',locals())
 
 
