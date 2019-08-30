@@ -200,8 +200,10 @@ def count_fruit(request):
 
 
 def login(request):
-    # result = FruitEntity.objects.values('name','price','source','fruitimageentty__url').all()
-     return render(request,'fruit/index.html')
+    result = FruitEntity.objects.values('name','price','source','fruitimageentty__url').all()
+    if request.COOKIES.get('login_name'):
+        return redirect('/user/find')
+    return render(request,'fruit/index.html',locals())
 
 
 def loginHandler(request):
@@ -210,27 +212,45 @@ def loginHandler(request):
     # result = FruitEntity.objects.values('name', 'price', 'source', 'fruitimageentty__url').filter(price__gte=price1,
     #                                                                                               price__lte=price2).all()
     if request.method == 'POST':
-        name = request.POST.get('name')
-        phone = request.POST.get('phone')
-        user_ = UserEntity.objects.filter(name=name).first()
-        print(name,phone,user_.name)
+        name = request.POST.get('name',None)
+        phone = request.POST.get('phone',None)
         response = ''
-        if user_:
+        if name:
+            user_ = UserEntity.objects.filter(name=name).first()
+            print(name, phone, user_.name)
             if user_.phone == phone:
+                response = HttpResponse("ok")
                 response = HttpResponseRedirect('find')
-                response.set_cookie('login_name',user_.name,max_age=20)
-                response.set_cookie('login_status',True,max_age=20)
+                response.set_cookie('login_name',user_.name)
+                response.set_cookie('login_status',True)
                 return response
             else:
-                re = {'msg':'密码错误'}
-                return HttpResponse(re)
+                msg = '用户名或密码错误'
+                return render(request,'fruit/index.html',locals())
         else:
-            re = {'msg':'用户不存在'}
-            return HttpResponse(re)
+            msg = '用户不存在'
+            return render(request,'fruit/index.html',locals())
 
 
 
-def find_nut(request):
-    result = FruitEntity.objects.values('name', 'price', 'source', 'fruitimageentty__url').filter(category__name='坚果类').all()
+
+
+def find_nut(request,name):
+    # name = request.GET.get('name')
+    username = request.COOKIES.get('login_name')
+    print(name)
+    result = FruitEntity.objects.values('name', 'price', 'source', 'fruitimageentty__url').filter(category__name=name).all()
     print(result)
     return render(request, 'fruit/afterlog.html', locals())
+
+
+def loginout(request):
+    response = HttpResponse("ok")
+    response = HttpResponseRedirect('login')
+    response.delete_cookie('login_name')
+    response.delete_cookie('is_login')
+    key = request.COOKIES.get('login_name')
+    print(key)
+    return response
+
+

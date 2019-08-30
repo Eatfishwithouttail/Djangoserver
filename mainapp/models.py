@@ -9,7 +9,6 @@ class UserEntity(models.Model):
     name = models.CharField(max_length=20, verbose_name='账号')
     age = models.IntegerField(default=0, verbose_name='年龄')
     phone = models.CharField(max_length=11, verbose_name='手机号', blank=True, null=True)
-
     class Meta:
         # 设置表名
         db_table = 't_user'

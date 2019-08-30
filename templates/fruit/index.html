@@ -15,6 +15,12 @@
             font-size: 30px;
             text-align: center;
         }
+        #msg{
+            float: right;
+            margin-top: 0px;
+            padding: 0px;
+            margin-right: 80px;
+        }
     </style>
 {% endblock %}
 {% block content %}
@@ -23,11 +29,11 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">首页</a>
+                <a class="navbar-brand" href="/user/find">首页</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
+{#                <ul class="nav navbar-nav">#}
 {#                    <li class="dropdown">#}
 {#                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"#}
 {#                           aria-expanded="false">水果分类<span class="caret"></span></a>#}
@@ -37,7 +43,7 @@
 {#                            <li><a href="#">dasdas</a></li>#}
 {#                        </ul>#}
 {#                    </li>#}
-                </ul>
+{#                </ul>#}
 {#                <form class="navbar-form navbar-left" method="get" action="/user/login">#}
 {#                    <div class="form-group">#}
 {#                        <input type="text" class="form-control" placeholder="最低价格" name="price1">#}
@@ -52,10 +58,9 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-
-
+    <P style="color: red" id="msg" >{{ msg }}</P>
     {#    展示页面 #}
-{#    <p class="top">水果列表</p>#}
+    <p class="top">水果列表</p>
     <div class="container-fluid  t_body">
         <div class="row">
             <div class="col-md-3"></div>
@@ -98,7 +103,6 @@
                              <label for="exampleInputEmail1">密码：</label>
                             <input type="text" class="form-control" placeholder="密码" name="phone" id="phone">
                         </div>
-                        <P style="color: red">{{ msg }}</P>
 {#                        <div class="form-group">#}
 {#                            <label for="exampleInputEmail1">密码：</label>#}
 {#                            <input type="text" class="form-control" placeholder="密码" name="phone" id="phone">#}

@@ -23,7 +23,7 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">首页</a>
+                <a class="navbar-brand" href="/user/find">首页</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -32,9 +32,9 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">水果分类<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/user/f_nut">坚果类</a></li>
-                            <li><a href="#">瓜果类</a></li>
-                            <li><a href="#">清火养颜</a></li>
+                            <li><a href="{% url 'f_nut' '坚果类' %}" name="坚果类">坚果类</a></li>
+                            <li><a href="{% url 'f_nut' '瓜果类' %}" name="瓜果类">瓜果类</a></li>
+                            <li><a href="{% url 'f_nut' '清火养颜' %}" name="清火养颜">清火养颜</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -47,12 +47,12 @@
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a >你好,{{  username }}</a></li>
-                    <li><a href="#">注销</a></li>
+                    <li><a href="/user/loginout">注销</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">个人中心<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">查看购物车</a></li>
+                            <li><a href="/">查看购物车</a></li>
                             <li><a href="#">查看订单</a></li>
                             <li><a href="#">查看地址</a></li>
                     </li>
