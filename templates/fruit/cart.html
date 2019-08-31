@@ -9,7 +9,7 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="{% url 'user:find' %}">首页</a>
+                <a class="navbar-brand" href="{% url 'user:f_nut' %}?cat=0">首页</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -18,9 +18,10 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">水果分类<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{% url 'user:f_nut' '坚果类' %}">坚果类</a></li>
-                            <li><a href="{% url 'user:f_nut' '瓜果类' %}">瓜果类</a></li>
-                            <li><a href="{% url 'user:f_nut' '清火养颜' %}">清火养颜</a></li>
+                            <li><a href="{% url 'user:f_nut' %}?cat={{ 0 }}">全部水果</a></li>
+                            {% for f in cats %}
+                                <li><a href="{% url 'user:f_nut' %}?cat={{ forloop.counter }}">{{ f.category__name }}</a></li>
+                            {% endfor %}
                         </ul>
                     </li>
                 </ul>
@@ -47,12 +48,56 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-
-
-<ul>
-    {% for f in fruit %}
-    <li>{{ f.name }}:{{ f.cart__fruitcartentity__fruit__name}}:{{ f.cart__fruitcartentity__cnt }}:{{ f.cart__fruitcartentity__fruit__price }}</li>
-    {% endfor %}
-</ul>
+        <div class="container-fluid  t_body">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="row">
+                        <div class="table-responsive">
+    <table class="table table-striped table-hover ">
+        <thead>
+            <tr>
+                <td>购物车编号</td>
+                <td>名称</td>
+                <td>数量</td>
+                <td>单价</td>
+                <td>总价</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for f in fruit %}
+            <tr>
+                <td>{{ f.no }}</td>
+                <td>{{ f.name}}</td>
+                <td>{{ f.cnt }}</td>
+                <td>{{ f.price }}</td>
+                <td>{% widthratio  f.cnt  1 f.price  %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+                    <nav aria-label="Page navigation" class="pager">
+                        <ul class="pagination">
+                            <li>
+                                <a href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            {% for _ in page %}
+                                <li><a href="{% url 'user:cart'  %}?page={{ forloop.counter}}" >{{ forloop.counter }}</a></li>
+                            {% endfor %}
+                            <li>
+                                <a href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
 
 {% endblock %}

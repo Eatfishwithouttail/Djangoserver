@@ -1,6 +1,7 @@
 import re
 import uuid
 
+from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -15,11 +16,24 @@ class UserValidator():
             raise ValidationError('手机格式不正确')
         return True
 
+
+
+
+class UserManage(models.Manager):
+    def update(self,**kwargs):
+        pwd = kwargs.get('pwd',None)
+        if pwd and len(pwd) < 50:
+            kwargs['pwd'] = make_password(pwd)
+        super().update(**kwargs)
+
+
+
 #用户模型
 class UserEntity(models.Model):
     name = models.CharField(max_length=20, verbose_name='账号')
     age = models.IntegerField(default=0, verbose_name='年龄')
     phone = models.CharField(max_length=11, verbose_name='手机号', blank=True, null=True,validators=[UserValidator.valid_phone])
+    pwd = models.CharField(max_length=10,verbose_name='密码',null=True,blank=True)
     class Meta:
         # 设置表名
         db_table = 't_user'
@@ -27,6 +41,12 @@ class UserEntity(models.Model):
         # 设置复数表示方式
         verbose_name_plural = verbose_name
 
+    objects = UserManage()
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if len(self.pwd) < 50:
+            self.pwd = make_password(self.pwd)
+        super().save()
     def __str__(self):
         return self.name
 

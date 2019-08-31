@@ -23,7 +23,7 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="{% url 'user:find' %}">首页</a>
+                <a class="navbar-brand" href="{% url 'user:f_nut' %}?cat=0">首页</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -32,9 +32,14 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">水果分类<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{% url 'user:f_nut' '坚果类' %}">坚果类</a></li>
-                            <li><a href="{% url 'user:f_nut' '瓜果类' %}">瓜果类</a></li>
-                            <li><a href="{% url 'user:f_nut' '清火养颜' %}">清火养颜</a></li>
+                            <li><a href="{% url 'user:f_nut' %}?cat={{ 0 }}">全部水果</a></li>
+                            {% for f in cats %}
+                                <li><a href="{% url 'user:f_nut' %}?cat={{ forloop.counter }}">{{ f.name }}</a></li>
+                            {% endfor %}
+
+{#                            <li><a href="{% url 'user:f_nut' '坚果类' %}">坚果类</a></li>#}
+{#                            <li><a href="{% url 'user:f_nut' '瓜果类' %}">瓜果类</a></li>#}
+{#                            <li><a href="{% url 'user:f_nut' '清火养颜' %}">清火养颜</a></li>#}
                         </ul>
                     </li>
                 </ul>
@@ -91,39 +96,6 @@
         </div>
     </div>
 
-    {# 模态框 显示登陆界面#}
-
-    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: lightgray">
-                    <h3>登录</h3>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="/user/loging">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">账号：</label>
-                            <input class="form-control" placeholder="账号" name="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">密码：</label>
-                            <input class="form-control" placeholder="密码" name="phone">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <a href="#">没有账号？ 点我注册</a>
-                    <button type="button" class="btn btn-info" data-dismiss="modal">登录</button>
-                </div>
-            </div>
-        </div>
-    </div>
 {% endblock %}
 
-{% block scripts %}
-    <script>
-        $('.login').on('shown.bs.modal', function () {
-            $('.modal.fade').focus()
-        })
-    </script>
-{% endblock %}
+

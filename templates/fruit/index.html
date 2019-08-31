@@ -55,7 +55,7 @@
                 {#                </form>#}
                 <ul class="nav navbar-nav navbar-right">
                     <li><a data-toggle="modal" data-target=".bs-example-modal-sm">登录</a></li>
-                    <li><a href="#">注册</a></li>
+                    <li><a data-toggle="modal" data-target=".bs-example-modal-lg" class="btn btn-info">注册</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -71,7 +71,7 @@
                     {% for d in result %}
                         <div class="col-sm-6 col-md-4">
                             <div class="thumbnail">
-                                <img id="img" src="/media/{{ d.url }}" alt="">
+                                <img id="img" src="/media/{% if d.url %}{{ d.url }}{% else %}{{ d.fruitimageentty__url}}{% endif %}" alt="">
                                 <div class="caption">
                                     <h3>{{ d.name }}</h3>
                                     <p>原产地：{{ d.source }}</p>
@@ -123,7 +123,7 @@
                             <input type="text" class="form-control" placeholder="账号" name="name" id="name"
                                    value="{{ name }}">
                             <label for="exampleInputEmail1">密码：</label>
-                            <input type="text" class="form-control" placeholder="密码" name="phone" id="phone">
+                            <input type="password" class="form-control" placeholder="密码" name="pwd" id="pwd">
                         </div>
                         {#                        <div class="form-group">#}
                         {#                            <label for="exampleInputEmail1">密码：</label>#}
@@ -131,9 +131,40 @@
                         {#                        </div>#}
                     </div>
                     <div class="modal-footer">
-                        <a href="#">没有账号？ 点我注册</a>
+                        <a data-toggle="modal" data-target=".bs-example-modal-lg" href="#" data-dismiss="modal">没有账号？ 点我注册</a>
                         <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>
                         <button type="submit" class="btn btn-info">登录</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: lightgray">
+                    <h3>注册</h3>
+                </div>
+                <form method="post" action="/user/regis">{% csrf_token %}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">账号：</label>
+                            <input type="text" class="form-control" placeholder="账号" name="name" id="name" value="{{ name }}">
+                            <label for="exampleInputEmail1">年龄：</label>
+                            <input type="text" class="form-control" placeholder="年龄" name="age" id="age" value="{{ age }}">
+                            <label for="exampleInputEmail1">手机号：</label>
+                            <input type="text" class="form-control" placeholder="手机号" name="phone" id="phone">
+                            <label for="exampleInputEmail1">密码：</label>
+                            <input type="password" class="form-control" placeholder="密码" name="pwd" id="pwd">
+                        </div>
+                        {#                        <div class="form-group">#}
+                        {#                            <label for="exampleInputEmail1">密码：</label>#}
+                        {#                            <input type="text" class="form-control" placeholder="密码" name="phone" id="phone">#}
+                        {#                        </div>#}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-info">点我注册</button>
                     </div>
                 </form>
             </div>
