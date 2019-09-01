@@ -42,10 +42,12 @@ def index(request: HttpRequest):
     # 加载数据模型
     # return HttpResponse('<h1 style="color:red;">hi Django</h1>')
     # 将数据渲染到模板中，并将渲染之后html响应给客户端
+    msg = request.GET.get('msg')
+    print(msg)
     result = FruitEntity.objects.raw('select t_fruit.id,t_fruit.name,t_fruit.price,t_fruit.source,tfi.url from t_fruit \
                                         join t_fruit_image tfi on t_fruit.id = tfi.fruit_id_id limit 0,6')
     if request.COOKIES.get('login_name'):
-        return redirect('/user/f_nut')
+        return redirect('/user/f_nut?cat=0')
     return render(request, 'fruit/index.html', locals())
 
 import xadmin

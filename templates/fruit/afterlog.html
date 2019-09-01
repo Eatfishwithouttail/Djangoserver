@@ -18,6 +18,12 @@
         #buy{
             margin-left: 7px;
         }
+     #msg {
+            float: right;
+            margin-top: 0px;
+            padding: 0px;
+            margin-right: 40px;
+        }
     </style>
 {% endblock %}
 {% block content %}
@@ -69,7 +75,7 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-
+<P style="color: red" id="msg">{{ msg|safe}}</P>
 
     {#    展示页面 #}
     <p class="top">水果列表</p>

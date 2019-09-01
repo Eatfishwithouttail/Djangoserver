@@ -9,7 +9,7 @@ from django.template import loader
 from django.urls import reverse
 
 from helloDjango import settings
-from mainapp.models import UserEntity, FruitEntity, FruitImageEntty, StoreEntity, CateTypeEntity
+from mainapp.models import UserEntity, FruitEntity, FruitImageEntty, StoreEntity, CateTypeEntity, FruitCartEntity, Cart
 from django.db.models import Count, Sum, Min, Avg, Max, F, Q
 
 
@@ -278,7 +278,7 @@ def FruitCart(request):
 
         num = page
         print(num)
-        fruit = UserEntity.objects.raw('select t_user.name ,t_user.id, t_cart.no,t_fruit.name,t_fruit_cart.cnt,t_fruit.price from t_user\
+        fruit = UserEntity.objects.raw('select t_user.name ,t_user.id, t_cart.no,t_fruit.name f_name,t_fruit_cart.cnt,t_fruit.price from t_user\
                                         join t_cart on t_user.id = t_cart.user_id\
                                         join t_fruit_cart on t_cart.no = t_fruit_cart.cart_id\
                                         join t_fruit on t_fruit_cart.fruit_id = t_fruit.id\
@@ -316,12 +316,47 @@ def Add_Fruit(request):
     id = request.GET.get('id')
     print(id)
     fruit = FruitEntity.objects.filter(id=id)
-    print(fruit)
+    print(fruit.first())
     print(user)
-    no = UserEntity.objects.values('cart__no').filter(name=username)
+    no = UserEntity.objects.values('cart__no').filter(name=username).first()
     print(no)
+    try:
+        cnt = FruitCartEntity.objects.values('cnt').filter(cart=no['cart__no'],fruit=fruit.first()).first()['cnt']
+        cnt = cnt + 1
+    except:
+        cnt = False
+    print(cnt)
+    cart = Cart.objects.get(no=no['cart__no'])
+    print(cart)
+    print(type(cart))
+    fruit=FruitEntity.objects.get(name=fruit.first())
+    # print(fruit)
+    print(type(fruit))
+    if cnt:
+        FruitCartEntity.objects.filter(cart=cart,fruit=fruit).update(cnt=cnt)
+    else:
+        FruitCartEntity(cart=cart, fruit=fruit,cnt=1).save()
+    return redirect('user:success')
 
-    return HttpResponse('id=%s'%(id))
+
+def success(request):
+    msg = "<script>window.onload = function(){alert('添加成功');\
+                 window.history.back(-2)}</script>"
+    # msg = '添加成功'
+    # cat = "0"
+    # username = request.COOKIES.get('login_name')
+    # cats = CateTypeEntity.objects.values('name').all()
+    # print(type(cat))
+    # print(cats)
+    # if cat:
+    #     if cat == '0':
+    #         result = FruitEntity.objects.values('id', 'name', 'price', 'source', 'fruitimageentty__url',
+    #                                             'category__name').all()
+    #     else:
+    #         result = FruitEntity.objects.values('id', 'name', 'price', 'source', 'fruitimageentty__url',
+    #                                             'category__name').filter(category__id=cat).all()
+    # # print(result)
+    return render(request,'fruit/afterlog.html',locals())
 
 
 
