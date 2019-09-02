@@ -1,6 +1,7 @@
 import os
 import re
 from datetime import datetime
+from django.core.paginator import Paginator,Page
 
 from django.contrib.auth.hashers import check_password
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
@@ -340,8 +341,8 @@ def Add_Fruit(request):
 
 
 def success(request):
-    msg = "<script>window.onload = function(){alert('添加成功');\
-                 window.history.back(-2)}</script>"
+    msg = '<div class="alert alert-success" role="alert">\
+  <a href="/" class="alert-link">添加成功，点此返回</a></div>'
     # msg = '添加成功'
     # cat = "0"
     # username = request.COOKIES.get('login_name')
@@ -356,7 +357,16 @@ def success(request):
     #         result = FruitEntity.objects.values('id', 'name', 'price', 'source', 'fruitimageentty__url',
     #                                             'category__name').filter(category__id=cat).all()
     # # print(result)
-    return render(request,'fruit/afterlog.html',locals())
+    return render(request,'fruit/success.html',locals())
 
 
+
+def pages(request):
+    fruits =  FruitEntity.objects.all()
+    print(fruits)
+
+    pages = Paginator(fruits,2)
+    print(pages.page("1").object_list)
+
+    return HttpResponse('pages')
 

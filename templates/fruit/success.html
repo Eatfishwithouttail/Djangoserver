@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {{ msg|safe }}
-</body>
-</html>
+{% extends 'fruit/base.html' %}
+
+
+
+{% block content %}
+    {{ msg | safe }}
+{% endblock %}
